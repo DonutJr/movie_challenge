@@ -10,6 +10,7 @@ class SchedulerController
     @movie_loader = MovieLoader.new
     @today = Time.now
     @finished = false
+    @allmovies = JSON.parse(File.read('movie_list.json'))
   end
 
   def run_program #This is the flow of your program, call other classes and methods to complete
@@ -23,10 +24,18 @@ class SchedulerController
     end
 
     until finished
-      # logic for your program
 
       runner_view.ask_if_user_is_finished
       user_choice = gets.chomp
+
+      if user_choice == 'all'
+        puts @allmovies
+        puts "Pick a movie"
+        user_movie = gets.chomp
+        Movie.new(user_movie)
+      
+
+      end
 
       if user_choice == 'end'
         exit_program 
